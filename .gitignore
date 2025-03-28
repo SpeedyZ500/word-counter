@@ -1,0 +1,6 @@
+## Macos files ##
+.DS_Store
+
+## ignore the input and output text files ## 
+*.txt
+.vscode/

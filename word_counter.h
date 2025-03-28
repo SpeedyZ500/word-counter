@@ -1,0 +1,4 @@
+#indef WORD_COUNTER_H
+#define WORD_COUNTER_H
+
+#endif WORD_COUNTER_H
