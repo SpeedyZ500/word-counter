@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 
+#include "word_counter.h"
+
 
 bool checkForMatchingExtension(const std::string& str, const std::string& ext){
     int n = str.length();
@@ -21,6 +23,10 @@ int main(int argc, const char * argv[]){
         return 1;
     }
     std::ifstream in(argv[1]);
+    if (!in) {
+        std::cerr << "Failed to open input file.\n";
+        return 1;
+    }
     std::stringstream buffer;
     buffer << in.rdbuf();
     std::string input = buffer.str();
@@ -32,8 +38,7 @@ int main(int argc, const char * argv[]){
         std::cout << "Would you like to provide an output file? Y/n" << std::endl;
         std::string provideInput = "";
         std::getline(std::cin, provideInput);
-        std::transform(provideInput.begin(), provideInput.end(), provideInput.begin(),
-        [](unsigned char c){ return std::toupper(c); });
+        std::transform(provideInput.begin(), provideInput.end(), provideInput.begin(), [](unsigned char c){ return std::toupper(c); });
 
         if(provideInput == "Y" || provideInput == "YES"){
             std::getline(std::cin, provideInput);
@@ -58,7 +63,13 @@ int main(int argc, const char * argv[]){
             return 1;
         }
     }
-    file.close();
+    
+    WordCounter book;
+    book.stringProcessor(input);
+    out << book.toString() << std::endl;
+    if(!outfile.empty()){
+        file.close();
+    }
 
     return 0;
 }
