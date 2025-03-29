@@ -18,15 +18,24 @@ class WordCounter{
         WordCounter(){
             total = 0;
         };
+
+
         void addWord(std::string word){
             total++;
             word_count[word]++;
         }
-        int getTotal(){
+        int getTotal() const{
             return total;
         }
         const std::map<std::string, int>& getWordCount() const { 
             return word_count; 
+        }
+
+        void processSubstats(const WordCounter& counter){
+            total += counter.getTotal();
+            for(const auto& pair : counter.getWordCount()){
+                word_count[pair.first] += pair.second;
+            }
         }
 
         void stringProcessor(std::string str){
@@ -42,6 +51,9 @@ class WordCounter{
         std::string toString() const{
             std::vector<std::pair<std::string, int> > sortedWords(word_count.begin(), word_count.end());
             std::sort(sortedWords.begin(), sortedWords.end(), [](const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
+                if(a.second == b.second){
+                    return a.first < b.first;
+                }
                 return a.second > b.second;  
             });
             std::ostringstream out;

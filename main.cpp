@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 
-#include "word_counter.h"
+#include "book.h"
 
 
 bool checkForMatchingExtension(const std::string& str, const std::string& ext){
@@ -64,8 +64,8 @@ int main(int argc, const char * argv[]){
         }
     }
     
-    WordCounter book;
-    book.stringProcessor(input);
+    Book book;
+    book.processText(input);
     out << book.toString() << std::endl;
     if(!outfile.empty()){
         file.close();
